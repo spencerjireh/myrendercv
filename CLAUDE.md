@@ -42,6 +42,16 @@ If the companion private repo is present, additional private targets may be load
 - Commit public changes from the repository root.
 - Commit private changes from `private/` with its own git history.
 
+## Git Workflow
+
+- When `private/` is present, check both repos before substantial work with `git status -sb` and `git -C private status -sb`.
+- When `private/` is present, pull both repos with `git pull --ff-only` and `git -C private pull --ff-only`.
+- Root-level git commands only affect the public repo; they do not include `private/`.
+- Commit public changes only from the repository root.
+- Commit private changes only from `private/`.
+- If a task touches both repos, commit and push the private repo first and the public repo second.
+- Keep public commit messages and documentation free of private company names.
+
 ## YAML Structure
 
 Each public resume YAML follows the RenderCV schema at `https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.6/schema.json`.

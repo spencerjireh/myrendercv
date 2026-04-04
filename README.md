@@ -48,6 +48,37 @@ Output goes to `rendercv_output/` and is not tracked in git.
 - Commit private changes from `private/`.
 - Keep company-specific files, names, and targets out of tracked public files.
 
+## Daily Git Workflow
+
+Start of session:
+
+```bash
+git status -sb
+git -C private status -sb
+git pull --ff-only
+git -C private pull --ff-only
+```
+
+Public-only changes:
+
+```bash
+make public
+git add <public-files>
+git commit -m "..."
+git push
+```
+
+Private-only changes:
+
+```bash
+make <private-target>
+git -C private add <private-files>
+git -C private commit -m "..."
+git -C private push
+```
+
+If a task touches both repos, commit and push the private repo first and the public repo second.
+
 ## Deployment
 
 A GitHub Actions workflow (`.github/workflows/render-and-deploy.yml`) renders only the public variants and deploys an explicit allowlist of PDFs, YAML files, and `docs/index.html` to GitHub Pages.
