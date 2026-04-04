@@ -1,6 +1,6 @@
 # myrendercv
 
-Personal CV/resume workspace powered by [RenderCV](https://github.com/rendercv/rendercv). A single YAML source file generates PDF, HTML, Markdown, and PNG outputs via Typst typesetting.
+Personal CV/resume workspace powered by [RenderCV](https://github.com/rendercv/rendercv). YAML source files generate PDF, HTML, Markdown, and PNG outputs via Typst typesetting.
 
 **Live site:** [spencerjireh.github.io/myrendercv](https://spencerjireh.github.io/myrendercv/)
 
@@ -22,22 +22,31 @@ Five tailored resumes are built from separate YAML configs, each emphasizing dif
 uv sync                  # install dependencies
 ```
 
+If you have access to the companion private repo, clone it into `private/` after cloning this repository. The public `Makefile` automatically loads `private/Makefile.private` when present.
+
+## Local Workflow
+
+- Public resume variants live in the repository root and are safe to publish.
+- Company-specific variants live in a separate companion repo cloned locally into `private/`.
+- `private/` and `rendercv_output/` are not tracked by this repository.
+
 ## Build
 
 ```bash
 make all                 # render all public variants
 make public              # same as make all
 make backend             # render a single variant
+make <private-target>    # available only when private/ is present
 make clean               # delete rendercv_output/
 ```
 
 Output goes to `rendercv_output/` and is not tracked in git.
 
-## Private Variants
+## Git Workflow
 
-Company-specific resume variants live in a separate private repository cloned locally into `private/`.
-
-The public `Makefile` will automatically load `private/Makefile.private` when that private repo is present, so local private targets stay available without exposing any company-specific files or names in this repo.
+- Commit public changes from the repository root.
+- Commit private changes from `private/`.
+- Keep company-specific files, names, and targets out of tracked public files.
 
 ## Deployment
 
