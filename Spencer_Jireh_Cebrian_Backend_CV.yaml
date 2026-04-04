@@ -1,0 +1,159 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.6/schema.json
+cv:
+  name: Spencer Jireh Cebrian
+  website: https://spencerjireh.com
+  email: spencercebrian123@gmail.com
+  social_networks:
+    - network: LinkedIn
+      username: spencerjireh
+    - network: GitHub
+      username: spencerjireh
+  sections:
+    experience:
+      - company: Stratpoint Technologies, Inc.
+        position: Junior Software Engineer
+        start_date: 2024-09
+        end_date: present
+        summary: Built backend services and APIs with Python/FastAPI on AWS architecture
+        highlights:
+          - "**AI Customer Service Platform:** Built AI chatbot backend for Fortune 500 automotive manufacturer, delivering FastAPI services on AWS Lambda/DynamoDB serving ~3,000 unique users with consistent month-over-month growth"
+          - Architected 12 FastAPI microservices with a shared library layer, deployed as containerized Lambda functions, shipping 77 features across 10 releases in 9 months
+          - Built real-time WebSocket messaging system with per-user and per-IP rate limiting, connection management, and DynamoDB TTL-based session lifecycle
+          - Developed analytics endpoints and intent classification pipeline tracking user trends and message categories, enabling data-driven knowledge base improvements
+          - Maintained and enhanced LangGraph-based conversational agent with RAG retrieval and prompt engineering, achieving ~97% automated resolution rate across customer queries
+          - "**Federated Machine Learning Platform:** Delivered MVP with secure aggregation backend in Python for global automotive components manufacturer, enabling privacy-preserving ML model training across distributed nodes"
+          - "**Internal R&D & Presales:** Built agentic document processing workflows and backend services for prospective client demonstrations, supporting active presales engagements"
+          - "**Internal Learning Platform:** Built learning management system with NextJS frontend and NestJS microservices backend, with Redis caching and Prometheus/Grafana observability"
+      - company: Stratpoint Technologies, Inc.
+        position: Java Intern
+        start_date: 2024-06
+        end_date: 2024-09
+        summary: Built payment system microservices with Spring Boot and Node.js, deployed via Docker/Kubernetes CI/CD pipeline
+        highlights:
+          - Developed RESTful APIs with JWT authentication and KYC verification using Kafka for event streaming, PostgreSQL, and Redis
+          - Integrated third-party payment gateway with webhook handlers and async event processing
+    projects:
+      - name: Arxivian
+        summary: Full-stack application utilizing agentic RAG workflows for semantic search and Q&A on arXiv research papers, built with NextJS, FastAPI, and LangGraph
+      - name: EECE Consultation Hub
+        summary: Web application with 1,000+ yearly active users for Mapua University's academic consultation scheduling, built with NextJS, PostgreSQL, and SSE for real-time updates
+    skills:
+      - label: Languages
+        details: Python, Java, JavaScript/TypeScript
+      - label: Backend
+        details: FastAPI, Spring Boot, Express, NestJS
+      - label: Infra & DevOps
+        details: AWS (Lambda, DynamoDB, CDK), PostgreSQL, Redis, MySQL, MongoDB, Docker, Kubernetes, Kafka
+      - label: Frontend
+        details: React.js, NextJS
+      - label: AI & ML
+        details: LangGraph, LangChain, Retrieval-Augmented Generation (RAG)
+    education:
+      - institution: Mapua University
+        area: Computer Science
+        degree: BS
+        date: 2025-01
+        location: Makati
+    certifications:
+      - name: AWS Academy Graduate - Cloud Foundations
+        date: 2024
+design:
+  theme: engineeringresumes
+  page:
+    size: us-letter
+    top_margin: 1.15cm
+    bottom_margin: 1.0cm
+    left_margin: 1.2cm
+    right_margin: 1.2cm
+    show_footer: false
+    show_top_note: false
+  colors:
+    body: rgb(0, 0, 0)
+    name: rgb(45, 55, 90)
+    connections: rgb(0, 0, 0)
+    section_titles: rgb(45, 55, 90)
+    links: rgb(0, 0, 0)
+    footer: rgb(128, 128, 128)
+  typography:
+    font_family:
+      body: XCharter
+      name: XCharter
+      connections: XCharter
+      section_titles: XCharter
+    font_size:
+      body: 10pt
+      name: 25pt
+      section_titles: 1.2em
+    line_spacing: 0.6em
+    alignment: justified
+    date_and_location_column_alignment: right
+    bold:
+      name: false
+      section_titles: true
+    small_caps:
+      section_titles: false
+  links:
+    underline: true
+    show_external_link_icon: false
+  header:
+    alignment: center
+    photo_width: 3.5cm
+    space_below_name: 0.5cm
+    space_below_connections: 0.5cm
+    connections:
+      show_icons: false
+      separator: "|"
+      space_between_connections: 0.1cm
+  section_titles:
+    type: with_full_line
+    line_thickness: 0.5pt
+    space_above: 0.3cm
+    space_below: 0.2cm
+  entries:
+    date_and_location_width: 4.15cm
+    side_space: 0cm
+    space_between_columns: 0.1cm
+    allow_page_break: true
+    short_second_row: false
+    highlights:
+      bullet: "\u2022"
+      space_left: 0cm
+      space_above: 0.2cm
+      space_between_items: 0.15cm
+      space_between_bullet_and_text: 0.3em
+    summary:
+      space_left: 0cm
+  sections:
+    allow_page_break: true
+    space_between_regular_entries: 0.25cm
+  templates:
+    one_line_entry:
+      main_column: "**LABEL:** DETAILS"
+    education_entry:
+      main_column: |-
+        **INSTITUTION**, DEGREE in AREA -- LOCATION
+        SUMMARY
+        HIGHLIGHTS
+      date_and_location_column: DATE
+    normal_entry:
+      main_column: |-
+        **NAME** -- **LOCATION**
+        SUMMARY
+        HIGHLIGHTS
+      date_and_location_column: DATE
+    experience_entry:
+      main_column: |-
+        **POSITION**, COMPANY -- LOCATION
+        SUMMARY
+        HIGHLIGHTS
+      date_and_location_column: DATE
+    publication_entry:
+      main_column: |-
+        **TITLE**
+        AUTHORS
+        URL (JOURNAL)
+      date_and_location_column: DATE
+locale:
+  language: english
+settings:
+  current_date: "2026-03-22"

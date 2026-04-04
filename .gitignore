@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+
+# uv
+.uv/
+
+# macOS
+.DS_Store
+
+# Private repo clone
+private/
+
+# RenderCV output
+rendercv_output/
+
+# Build artifacts
+_site/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

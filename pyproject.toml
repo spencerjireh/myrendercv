@@ -1,0 +1,8 @@
+[project]
+name = "myrendercv"
+version = "0.1.0"
+description = "Personal CV built with RenderCV"
+requires-python = ">=3.12"
+dependencies = [
+    "rendercv[full]>=2.2",
+]

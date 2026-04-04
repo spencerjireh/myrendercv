@@ -1,0 +1,73 @@
+name: Render CVs and Deploy to Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Spencer_Jireh_Cebrian_CV.yaml"
+      - "Spencer_Jireh_Cebrian_Backend_CV.yaml"
+      - "Spencer_Jireh_Cebrian_Fullstack_CV.yaml"
+      - "Spencer_Jireh_Cebrian_AI_Engineer_CV.yaml"
+      - "Spencer_Jireh_Cebrian_Go_Dev_CV.yaml"
+      - "Makefile"
+      - ".gitignore"
+      - "README.md"
+      - "docs/**"
+      - ".github/workflows/render-and-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: uv sync
+
+      - run: make public
+
+      - run: |
+          mkdir -p _site
+          cp rendercv_output/Spencer_Jireh_Cebrian_CV.pdf _site/
+          cp rendercv_output/Spencer_Jireh_Cebrian_Backend_CV.pdf _site/
+          cp rendercv_output/Spencer_Jireh_Cebrian_Fullstack_CV.pdf _site/
+          cp rendercv_output/Spencer_Jireh_Cebrian_AI_Engineer_CV.pdf _site/
+          cp rendercv_output/Spencer_Jireh_Cebrian_Go_Dev_CV.pdf _site/
+          cp Spencer_Jireh_Cebrian_CV.yaml _site/
+          cp Spencer_Jireh_Cebrian_Backend_CV.yaml _site/
+          cp Spencer_Jireh_Cebrian_Fullstack_CV.yaml _site/
+          cp Spencer_Jireh_Cebrian_AI_Engineer_CV.yaml _site/
+          cp Spencer_Jireh_Cebrian_Go_Dev_CV.yaml _site/
+          cp docs/index.html _site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: render
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

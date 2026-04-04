@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a" id="tc">
+  <title>Spencer Jireh Cebrian -- CV</title>
+  <meta name="description" content="Spencer Jireh Cebrian -- Software Engineer. Resume variants for download.">
+  <script>
+    (function(){
+      document.documentElement.classList.add('js');
+      var s=localStorage.getItem('theme');
+      var t=s||(window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+      document.documentElement.setAttribute('data-theme',t);
+      var m=document.getElementById('tc');
+      if(m)m.content=t==='dark'?'#0a0a0a':'#f0efe6';
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+    :root {
+      --bg: #0a0a0a;
+      --text: #999;
+      --text-hi: #d4d4d4;
+      --text-lo: #6a6a6a;
+      --accent: #4af626;
+      --accent-12: rgba(74, 246, 38, 0.12);
+      --accent-06: rgba(74, 246, 38, 0.06);
+      --accent-03: rgba(74, 246, 38, 0.03);
+      --border: #1c1c1c;
+      --scan: rgba(0, 0, 0, 0.04);
+      --vignette: rgba(0, 0, 0, 0.35);
+      --mono: 'Space Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #f0efe6;
+      --text: #555548;
+      --text-hi: #1a1a14;
+      --text-lo: #7a7a6c;
+      --accent: #1a6a0a;
+      --accent-12: rgba(26, 106, 10, 0.12);
+      --accent-06: rgba(26, 106, 10, 0.06);
+      --accent-03: rgba(26, 106, 10, 0.03);
+      --border: #c8c8b8;
+      --scan: rgba(0, 0, 0, 0.018);
+      --vignette: rgba(0, 0, 0, 0.06);
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* ── CRT scanlines ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        var(--scan) 0px,
+        var(--scan) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      z-index: 10000;
+    }
+
+    /* ── CRT vignette ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 55%, var(--vignette) 100%);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Terminal container ── */
+    .terminal {
+      max-width: 680px;
+      width: 100%;
+      padding: 1.5rem 2rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .js .terminal {
+      animation: powerOn 0.6s ease-out both;
+    }
+
+    @keyframes powerOn {
+      0%   { opacity: 0; }
+      8%   { opacity: 0.8; }
+      12%  { opacity: 0.1; }
+      20%  { opacity: 0.9; }
+      24%  { opacity: 0.4; }
+      40%  { opacity: 1; }
+      100% { opacity: 1; }
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+
+    .prompt {
+      font-size: 0.8125rem;
+      color: var(--text-lo);
+    }
+
+    .accent { color: var(--accent); }
+
+    .theme-btn {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-lo);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.65rem;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .theme-btn:hover,
+    .theme-btn:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-03);
+    }
+
+    .theme-btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
+    .theme-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.8;
+    }
+
+    /* ── Sections (animated with JS) ── */
+    .js .section {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .js .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section { margin-bottom: 2.5rem; }
+
+    /* ── Command prompt ── */
+    .cmd {
+      font-size: 0.8125rem;
+      color: var(--text-lo);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-name {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--text-hi);
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      min-height: 2.7rem;
+    }
+
+    .cursor {
+      color: var(--accent);
+      font-weight: 400;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-role {
+      font-size: 0.875rem;
+      color: var(--text-lo);
+      margin-top: 0.375rem;
+      letter-spacing: 0.06em;
+    }
+
+    .js .hero-role {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .js .hero-role.visible { opacity: 1; }
+
+    /* ── Resume cards ── */
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .card {
+      display: flex;
+      align-items: baseline;
+      gap: 0.625rem;
+      padding: 0.75rem 1rem;
+      background: var(--accent-03);
+      border: 1px solid transparent;
+      border-radius: 3px;
+      color: inherit;
+      transition: background 0.2s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .js .card {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+
+    .js .card.visible {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.4s ease, transform 0.4s ease,
+                  background 0.2s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      background: var(--accent-06);
+      border-color: var(--accent);
+      box-shadow: 0 0 24px var(--accent-03), inset 0 0 24px var(--accent-03);
+    }
+
+    .chevron {
+      color: var(--accent);
+      font-size: 0.875rem;
+      opacity: 0.25;
+      transition: opacity 0.2s;
+      flex-shrink: 0;
+    }
+
+    .card:hover .chevron { opacity: 1; }
+
+    .card-name {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--text-hi);
+      white-space: nowrap;
+      min-width: 105px;
+      transition: color 0.2s, text-shadow 0.3s;
+    }
+
+    .card:hover .card-name {
+      color: var(--accent);
+      text-shadow: 0 0 8px var(--accent-12);
+    }
+
+    .card-desc {
+      flex: 1;
+      font-size: 0.75rem;
+      color: var(--text-lo);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .card-ext {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      color: var(--text-lo);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      padding: 0.15rem 0.35rem;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .card-ext:hover,
+    .card-ext:focus-visible {
+      color: var(--accent);
+      background: var(--accent-06);
+    }
+
+    .card-ext:focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
+
+    .card:hover .card-ext { color: var(--accent); }
+
+    /* ── Social links ── */
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .link {
+      font-size: 0.8125rem;
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.35rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.3s;
+    }
+
+    .link:hover,
+    .link:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-03);
+      box-shadow: 0 0 12px var(--accent-03);
+    }
+
+    .link:focus-visible { outline: none; }
+
+    /* ── Footer ── */
+    .footer {
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    .footer-txt {
+      font-size: 0.75rem;
+      color: var(--text-lo);
+    }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+        transition-duration: 0.01ms !important;
+      }
+      .js .section, .js .card, .js .hero-role {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 540px) {
+      .terminal { padding: 1rem 1.25rem 2rem; }
+      .topbar { padding: 1rem 0; margin-bottom: 1.75rem; }
+      .hero-name { font-size: 1.5rem; min-height: 3.6rem; }
+      .card { padding: 0.625rem 0.75rem; gap: 0.5rem; }
+      .card-desc { display: none; }
+      .card-name { min-width: auto; }
+      .links { gap: 0.375rem; }
+      .link { font-size: 0.75rem; padding: 0.3rem 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal" id="terminal">
+    <nav class="topbar">
+      <span class="prompt"><span class="accent">cebrian</span>@cv:~$</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <span class="theme-dot"></span>
+        <span id="themeTxt">dark</span>
+      </button>
+    </nav>
+
+    <section class="section hero" id="heroSection">
+      <p class="cmd"><span class="accent">$</span> whoami</p>
+      <h1 class="hero-name"><span id="typed">Spencer Jireh Cebrian</span><span class="cursor">_</span></h1>
+      <p class="hero-role" id="heroRole">software engineer</p>
+    </section>
+
+    <section class="section" id="resumeSection">
+      <p class="cmd"><span class="accent">$</span> ls ./resumes</p>
+      <div class="cards" id="cards">
+        <div class="card">
+          <span class="chevron">&gt;</span>
+          <span class="card-name">general</span>
+          <span class="card-desc">full-stack and AI -- the default resume</span>
+          <div class="card-actions">
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_CV.yaml" download>.yaml</a>
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_CV.pdf" download>.pdf</a>
+          </div>
+        </div>
+        <div class="card">
+          <span class="chevron">&gt;</span>
+          <span class="card-name">backend</span>
+          <span class="card-desc">APIs, microservices, and distributed systems</span>
+          <div class="card-actions">
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_Backend_CV.yaml" download>.yaml</a>
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_Backend_CV.pdf" download>.pdf</a>
+          </div>
+        </div>
+        <div class="card">
+          <span class="chevron">&gt;</span>
+          <span class="card-name">fullstack</span>
+          <span class="card-desc">end-to-end delivery, frontend and backend</span>
+          <div class="card-actions">
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_Fullstack_CV.yaml" download>.yaml</a>
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_Fullstack_CV.pdf" download>.pdf</a>
+          </div>
+        </div>
+        <div class="card">
+          <span class="chevron">&gt;</span>
+          <span class="card-name">ai-engineer</span>
+          <span class="card-desc">LLM agents, RAG pipelines, and applied AI</span>
+          <div class="card-actions">
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_AI_Engineer_CV.yaml" download>.yaml</a>
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_AI_Engineer_CV.pdf" download>.pdf</a>
+          </div>
+        </div>
+        <div class="card">
+          <span class="chevron">&gt;</span>
+          <span class="card-name">go-dev</span>
+          <span class="card-desc">Go, cloud infrastructure, and backend systems</span>
+          <div class="card-actions">
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_Go_Dev_CV.yaml" download>.yaml</a>
+            <a class="card-ext" href="Spencer_Jireh_Cebrian_Go_Dev_CV.pdf" download>.pdf</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="linkSection">
+      <p class="cmd"><span class="accent">$</span> cat ./links</p>
+      <div class="links">
+        <a class="link" href="https://github.com/spencerjireh" target="_blank" rel="noopener noreferrer">[github]</a>
+        <a class="link" href="https://linkedin.com/in/spencerjireh" target="_blank" rel="noopener noreferrer">[linkedin]</a>
+        <a class="link" href="mailto:spencercebrian123@gmail.com">[email]</a>
+        <a class="link" href="https://spencerjireh.com" target="_blank" rel="noopener noreferrer">[web]</a>
+      </div>
+    </section>
+
+    <footer class="section footer" id="footerSection">
+      <p class="footer-txt">// exit 0</p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var typedEl = document.getElementById('typed');
+      var heroRole = document.getElementById('heroRole');
+      var heroSection = document.getElementById('heroSection');
+      var fullName = 'Spencer Jireh Cebrian';
+
+      /* ── Theme toggle ── */
+      var themeBtn = document.getElementById('themeBtn');
+      var themeTxt = document.getElementById('themeTxt');
+      var themeMeta = document.getElementById('tc');
+
+      function currentTheme() {
+        return document.documentElement.getAttribute('data-theme');
+      }
+
+      function applyTheme(t) {
+        document.documentElement.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+        themeTxt.textContent = t;
+        if (themeMeta) themeMeta.content = t === 'dark' ? '#0a0a0a' : '#f0efe6';
+      }
+
+      themeTxt.textContent = currentTheme();
+
+      themeBtn.addEventListener('click', function() {
+        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      });
+
+      /* ── Reduced motion: show everything immediately ── */
+      if (reduced) {
+        heroRole.classList.add('visible');
+        document.querySelectorAll('.section').forEach(function(s) { s.classList.add('visible'); });
+        document.querySelectorAll('.card').forEach(function(c) { c.classList.add('visible'); });
+        return;
+      }
+
+      /* ── Animated sequence ── */
+
+      // Clear name for typing effect
+      typedEl.textContent = '';
+
+      // 1. Hero section fades in
+      setTimeout(function() {
+        heroSection.classList.add('visible');
+      }, 200);
+
+      // 2. Typing animation starts
+      var charIndex = 0;
+      setTimeout(function() {
+        var interval = setInterval(function() {
+          typedEl.textContent = fullName.slice(0, charIndex + 1);
+          charIndex++;
+          if (charIndex >= fullName.length) clearInterval(interval);
+        }, 55);
+      }, 500);
+
+      // 3. Role fades in after typing completes
+      var typingDone = 500 + fullName.length * 55 + 200;
+      setTimeout(function() {
+        heroRole.classList.add('visible');
+      }, typingDone);
+
+      // 4. Scroll-triggered reveals for remaining sections
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            var cards = entry.target.querySelectorAll('.card');
+            cards.forEach(function(card, i) {
+              setTimeout(function() { card.classList.add('visible'); }, i * 80);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      // Start observing after hero sequence
+      setTimeout(function() {
+        document.querySelectorAll('.section:not(#heroSection)').forEach(function(s) {
+          observer.observe(s);
+        });
+      }, typingDone);
+    });
+  </script>
+</body>
+</html>
